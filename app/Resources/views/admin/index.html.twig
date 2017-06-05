@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ url('fos_user_security_logout') }}">Logout</a>
+
+    <div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1><span>Admin page</span> Don't mess around!</h1>
+            </div>
+
+            <div id="products">
+                <h2>Products:</h2>
+
+            {% if products is iterable and products|length %}
+                <ul>
+                {% for product in products %}
+                    <li><a href="{{ url('product_edit', {'productId': product.id}) }}">{{ product.name }}</a> ({{ product.description }}) : {{ product.price }} €</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>
+                    No products yet
+                </p>
+            {% endif %}
+            <a href="{{ url('product_add') }}">Add product</a>
+            </div>
+
+            <div id="users">
+                <h2>Users:</h2>
+
+            {% if users is iterable and users|length %}
+                <ul>
+                {% for user in users %}
+                    <li><a href="{{ url('user_edit', {'userId': user.id}) }}">{{ user.username }}</a> ({{ user.email }})</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>
+                    No users yet
+                </p>
+            {% endif %}
+            <a href="{{ url('user_add') }}">Add User</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
+    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 21px; margin-bottom: 1em; }
+    p { margin: 0 0 1em 0; }
+    a { color: #0000F0; }
+    a:hover { text-decoration: none; }
+    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
+    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
+    #container { padding: 2em; }
+    #welcome, #products { margin-bottom: 2em; }
+    #welcome h1 span { display: block; font-size: 75%; }
+
+    @media (min-width: 768px) {
+        #wrapper { width: 80%; margin: 2em auto; }
+
+        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
+    }
+</style>
+{% endblock %}
